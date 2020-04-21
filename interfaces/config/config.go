@@ -41,7 +41,7 @@ func NewConfig(dataSource DataSource) (*config, error) {
 		},
 	}
 
-	instance.stringVars[listenAddr] = "8080"
+	instance.stringVars[listenAddr] = ":8080"
 
 	instance.stringVars[dbPassword] = ""
 	instance.stringVars[dbBase] = ""

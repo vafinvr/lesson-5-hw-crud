@@ -42,6 +42,7 @@ func (ws *webService) readUser(w http.ResponseWriter, r *http.Request, params ma
 	userId, err = ws.readUserId(params)
 	if err != nil {
 		ws.sendError(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	resUser, err := ws.usersInteractor.Read(userId)
@@ -63,6 +64,7 @@ func (ws *webService) updateUser(w http.ResponseWriter, r *http.Request, params 
 	user.ID, err = ws.readUserId(params)
 	if err != nil {
 		ws.sendError(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	resUser, err := ws.usersInteractor.Update(user)

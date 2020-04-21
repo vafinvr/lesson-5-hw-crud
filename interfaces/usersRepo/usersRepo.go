@@ -29,7 +29,7 @@ func (r *usersRepo) Create(user *domain.User) error {
 
 func (r *usersRepo) Read(id int64) (user *domain.User, err error) {
 	query := `SELECT
-		username, first_name, last_name, email, phone
+		id, username, first_name, last_name, email, phone
 	FROM users
 	WHERE id=$1`
 

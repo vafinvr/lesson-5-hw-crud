@@ -2,20 +2,17 @@ package pgdb
 
 import (
 	"github.com/go-pg/pg/v9"
-	"lesson-5-hw-crud/common"
 )
 
 type pgdb struct {
 	conn *pg.DB
-	log  common.Logger
 }
 
-func New(addr, db, user, password, dbNetwork string, log common.Logger) *pgdb {
+func New(addr, db, user, password, dbNetwork string) *pgdb {
 	conn := connect(addr, db, user, password, dbNetwork)
 
 	return &pgdb{
 		conn: conn,
-		log:  log,
 	}
 }
 

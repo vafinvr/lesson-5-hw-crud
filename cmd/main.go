@@ -25,7 +25,6 @@ func main() {
 		cfg.GetDbUser(),
 		cfg.GetDbPassword(),
 		cfg.GetDbNetwork(),
-		log,
 	)
 
 	ur := usersRepo.New(db)

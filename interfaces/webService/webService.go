@@ -39,8 +39,8 @@ func New(webServer webServer, usersInteractor usersInteractor, log common.Logger
 func (ws *webService) initCrudRoutes() {
 	ws.server.AddRoute("/user", ws.createUser, http.MethodPost)
 	ws.server.AddRouteWithParams("/user/{userId}", ws.readUser, http.MethodGet)
-	ws.server.AddRouteWithParams("/user/{confId}", ws.updateUser, http.MethodPut)
-	ws.server.AddRouteWithParams("/user/{confId}", ws.deleteUser, http.MethodDelete)
+	ws.server.AddRouteWithParams("/user/{userId}", ws.updateUser, http.MethodPut)
+	ws.server.AddRouteWithParams("/user/{userId}", ws.deleteUser, http.MethodDelete)
 }
 
 func (ws *webService) Start() {
@@ -53,6 +53,9 @@ func (ws *webService) sendResponse(w http.ResponseWriter, response interface{}, 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 
+	if response == nil {
+		return
+	}
 	res, err := json.Marshal(response)
 	if err != nil {
 		ws.sendError(w, fmt.Sprintf("Marshal response failed: %s", err.Error()), http.StatusInternalServerError)
@@ -66,6 +69,10 @@ func (ws *webService) sendResponse(w http.ResponseWriter, response interface{}, 
 
 func (ws *webService) sendError(w http.ResponseWriter, message string, code int) {
 	ws.log.Errorf("Response %d (%s): %s", code, http.StatusText(code), message)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+
 	res, _ := json.Marshal(resultError{
 		Code:    code,
 		Message: message,
