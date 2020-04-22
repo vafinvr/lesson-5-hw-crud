@@ -7,5 +7,5 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o /app ./cmd/main.go
 FROM alpine:latest
 COPY --from=builder /app /
 RUN chmod +x /app
-EXPOSE 8000
+EXPOSE 8080
 CMD ["/app"]
